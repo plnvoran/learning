@@ -23,7 +23,7 @@ public class ListExample {
         System.out.println(myList.get(0));
 
         printAllElements(myList);
-        printAllElements(myList2);
+        //printAllElements(myList2);
     }
 
     static void printAllElements(ArrayList<String> list) {
