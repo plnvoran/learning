@@ -5,7 +5,6 @@ public class Second {
     public static void main(String[] args) {
 
         int[] myArray = {5, 3, 5, 3, 4, 4, 3, 2, 5, 4};
-        char [] l = {5, 3, 5, 3, 4, 4, 3, 2, 5, 4};
 
         // Example 1
         System.out.println("Среднее значение массива");
