@@ -15,7 +15,7 @@ public class Second {
 
         //3. Задан массив символов: a..z + пробелы. Требуется установить, является ли он палиндромом
         String stringOne = "rotor";
-        String stringTwo = "ro t or";
+        String stringTwo = "ro tor".replace(" ", "");
         String stringThird = "mama";
         String stringForth = "selenium";
 
@@ -26,58 +26,58 @@ public class Second {
 
 
     }
+    //"abbc"
+    //"abba"
+    //"aba"
+    //" abc "
 
-    static boolean isPalindrome(String str) {
-
-        char[] charArray= str.toCharArray();
-        int lenHalf = charArray.length / 2;
-
-        Boolean result = true;
-        for(int i = 0, j = charArray.length-1; i <lenHalf; i++, j--) {
-            int left = charArray[i]- '0';
-            int right = charArray[j]- '0';
-
-            if( left!=right )
-
-            {
-                result = false;
-                break;
-
+    public static boolean isPalindrome(String str) {
+        char[] charArray = str.toCharArray();
+        if (charArray.length == 0) {
+            return true;
+        }
+        int leftIndex = 0;
+        int rightIndex = charArray.length - 1;
+        while (leftIndex < rightIndex) {
+            char leftValue = charArray[leftIndex];
+            char rightValue = charArray[rightIndex];
+            if (leftValue == ' ') {
+                leftIndex++;
+            } else if (rightValue == ' ') {
+                rightIndex++;
+            } else if (leftValue != rightValue) {
+                return false;
             }
         }
-
-        return result;
+        return true;
 
     }
 
-    static float averageValueOfArray(int[] myArray) {
-        int sum = 0;
-
-        for (int i = 0; i < myArray.length; i++) {
-            sum = sum + myArray[i];
-
+    static double averageValueOfArray(int[] myArray) {
+        if (myArray.length == 0) {
+            return 0.0;
         }
-        float avg = (float) (sum) / (float) (myArray.length);
-        return avg;
-
+        int sum = 0;
+        for (int j : myArray) {
+            sum += j;
+        }
+        return (1.0 * sum) / myArray.length;
     }
 
 
 
     static int maxDiff(int[] myArray) {
 
-        int d = 0;
-        int max = 0;
-        for (int i = 0; i < myArray.length; i++) {
-
-            for (int j = i + 1; j < myArray.length; j++) {
-                d = (myArray[i] * myArray[i]) - (myArray[j] * myArray[j]);
-                if (d > max)
-                    max = d;
-            }
+        //O(n) : 100 -> 100, 1_000_000 -> 1_000_000
+        //O(n^2): 100 -> 10_000; 1_000_000 -> 1_000_000_000_000
+        int minSquare = 0;
+        int maxSquare = 0;
+        for (int value : myArray) {
+            int square = value * value;
+            minSquare = Math.min(minSquare, square);
+            maxSquare = Math.max(maxSquare, square);
         }
-        return max;
-
+        return maxSquare - minSquare;
     }
 
     static void printArray(int[] myArray) {
