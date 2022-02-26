@@ -4,123 +4,88 @@ public class Second {
 
     public static void main(String[] args) {
 
-        int[] myArray = {5, 3, 5, 3, 4, 4, 3, 2, 5, 4};
+        int[] myArray = {5, 3, 5, 3, 4, 4, 3, 2, 5, 33};
 
-        // Example 1
-        System.out.println("Среднее значение массива");
         printArray(myArray);
-        System.out.println("Отсортирован массив:");
-        sorting((myArray));
-        printArray(myArray);
-        System.out.println("Среднее значение:");
-        System.out.println(averageValueOfArray(myArray));
 
-        //Example 2
-        System.out.println("Максимальная разница квадратов элементов");
-        System.out.println("Массив в квадрате:");
-        square(myArray);
-        printArray(myArray);
-        System.out.println("Результат: " + maxDiff(myArray));
+        // 1. Метод принимает на вход массив целых чисел, должен вернуть среднее значение элементов
+        System.out.printf("Среднее значение: %1.2f \n", averageValueOfArray(myArray));
+        // 2. Метод принимает на вход массив целых чисел, должен вернуть максимальную из разниц квадратов его элементо
+        System.out.println("Максимальная разница квадратов элементов: " + maxDiff(myArray));
 
-        //Example 3
+        //3. Задан массив символов: a..z + пробелы. Требуется установить, является ли он палиндромом
         String stringOne = "rotor";
-        String stringTwo = "abba";
-        String stringThird = "selenium";
-        char[] charDem;
+        String stringTwo = "ro tor".replace(" ", "");
+        String stringThird = "mama";
+        String stringForth = "selenium";
 
-        charDem=stringTOChar("rotor");
-        printArray(charDem);
-        System.out.println("Полиандром: "+isPoliandrom(charDem));
-        charDem=stringTOChar("selenium");
-        printArray(charDem);
-        System.out.println("Полиандром: "+isPoliandrom(charDem));
-        charDem=stringTOChar("abba");
-        printArray(charDem);
-        System.out.println("Полиандром: "+isPoliandrom(charDem));
+        System.out.println(stringOne+" Полиандром ? "+ isPalindrome(stringOne));
+        System.out.println(stringTwo +" Полиандром ? "+ isPalindrome(stringTwo ));
+        System.out.println(stringThird+" Полиандром ? "+ isPalindrome(stringThird));
+        System.out.println(stringForth +" Полиандром ? "+ isPalindrome(stringForth));
+
 
     }
-    static char[]  stringTOChar(String str) {
+    //"abbc"
+    //"abba"
+    //"aba"
+    //" abc "
+
+    public static boolean isPalindrome(String str) {
         char[] charArray = str.toCharArray();
-        return charArray;
-    }
-
-    static String isPoliandrom(char[] l) {
-
-        int lenHalf = l.length / 2;
-
-        String result = "yes";
-        for(int i = 0, j = l.length-1; i <lenHalf; i++, j--) {
-
-            if (l[i]!=l[j])
-            {
-                result = "no";
-                break;
-
+        if (charArray.length == 0) {
+            return true;
+        }
+        int leftIndex = 0;
+        int rightIndex = charArray.length - 1;
+        while (leftIndex < rightIndex) {
+            char leftValue = charArray[leftIndex];
+            char rightValue = charArray[rightIndex];
+            if (leftValue == ' ') {
+                leftIndex++;
+            } else if (rightValue == ' ') {
+                rightIndex++;
+            } else if (leftValue != rightValue) {
+                return false;
             }
         }
-
-            return result;
+        return true;
 
     }
 
-    static int averageValueOfArray(int[] myArray) {
+    static double averageValueOfArray(int[] myArray) {
+        if (myArray.length == 0) {
+            return 0.0;
+        }
         int sum = 0;
-
-        for (int i = 0; i < myArray.length; i++) {
-            sum = sum + myArray[i];
-
+        for (int j : myArray) {
+            sum += j;
         }
-
-        return (sum / myArray.length);
-
+        return (1.0 * sum) / myArray.length;
     }
 
-    static int square(int[] myArray) {
 
-        for (int i = 0; i < myArray.length; i++) {
-            myArray[i] = (int) Math.pow(myArray[i], 2);
-        }
-        return myArray[myArray.length - 1] - myArray[0];
-    }
 
     static int maxDiff(int[] myArray) {
 
-        return myArray[myArray.length - 1] - myArray[0];
-
-    }
-
-    static void sorting(int[] myArray) {
-        boolean hasChanges = true;
-        while (hasChanges) {
-            hasChanges = false;
-            for (int i = 0; i < myArray.length - 1; i++) {
-                int current = myArray[i];
-                int next = myArray[i + 1];
-                if (current > next) { //swap
-                    myArray[i] = next;
-                    myArray[i + 1] = current;
-                    hasChanges = true;
-                }
-            }
+        //O(n) : 100 -> 100, 1_000_000 -> 1_000_000
+        //O(n^2): 100 -> 10_000; 1_000_000 -> 1_000_000_000_000
+        int minSquare = 0;
+        int maxSquare = 0;
+        for (int value : myArray) {
+            int square = value * value;
+            minSquare = Math.min(minSquare, square);
+            maxSquare = Math.max(maxSquare, square);
         }
-
+        return maxSquare - minSquare;
     }
 
     static void printArray(int[] myArray) {
-        int sum = 0;
-
+        System.out.println("Дан массив:");
         for (int i = 0; i < myArray.length; i++) {
             System.out.print(myArray[i] + ", ");
         }
         System.out.println();
 
-    }
-    static void printArray(char[] myArray) {
-        int sum = 0;
-
-        for (int i = 0; i < myArray.length; i++) {
-            System.out.print(myArray[i] + ", ");
-        }
-        System.out.println();
     }
 }
